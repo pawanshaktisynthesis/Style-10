@@ -1,0 +1,373 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   AETHER — the design system for PawanShakti Synthesis
+   Wind (pawan) becomes power (shakti) becomes form (synthesis).
+   ========================================================================= */
+
+@theme {
+  /* --- Color -------------------------------------------------------------
+     A blue-violet black, never neutral gray. Display type is champagne,
+     never pure white — pure white on near-black is the tell of a default. */
+  --color-void: #05060b;
+  --color-abyss: #08090f;
+  --color-depth: #0b0d18;
+  --color-elevated: #11131f;
+  --color-rule: #1c1f2e;
+
+  --color-champagne: #e9dcc3;
+  --color-bone: #c8c6d0;
+  /* Both greys clear 4.5:1 against --color-void. The mono labels set in
+     `faint` are real content — form field labels among them — so the tier
+     below `muted` still has to be readable, not merely present. */
+  --color-muted: #9a97ac;
+  --color-faint: #7b7890;
+
+  /* The synthesis gradient: breath -> power */
+  --color-prana: #56e8cf;
+  --color-prana-deep: #1ea892;
+  --color-shakti: #7a5cff;
+  --color-shakti-deep: #4c34c9;
+
+  /* The deliberate warm note. Human contact only. */
+  --color-ember: #f2a65a;
+
+  /* --- Type ------------------------------------------------------------- */
+  --font-display: var(--font-sora), "Helvetica Neue", sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-editorial: var(--font-instrument), Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* --- Motion ------------------------------------------------------------
+     Physics-inspired. Nothing linear, nothing bouncy-cheap. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-swift: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Structure --------------------------------------------------------- */
+  --radius-card: 20px;
+  --radius-pill: 999px;
+}
+
+/* ============================================================================
+   Base
+   ========================================================================= */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto; /* Lenis owns scrolling */
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  /* Lenis drives transform-based scrolling; it must not fight native. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-champagne);
+    text-wrap: balance;
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+    font-weight: 300;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-shakti) 45%, transparent);
+    color: #fff;
+  }
+
+  /* Keyboard focus is a first-class visual, not an afterthought. */
+  :focus-visible {
+    outline: 2px solid var(--color-prana);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Scrollbar — thin, on-brand, never default chrome. */
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-rule);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-faint);
+  }
+}
+
+/* ============================================================================
+   Type scale — fluid, editorial, with real weight contrast
+   ========================================================================= */
+
+@layer components {
+  /* The signature: ExtraLight and SemiBold inside one headline. */
+  .t-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 9.5vw, 11rem);
+    font-weight: 200;
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+  }
+
+  .t-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5.6vw, 5.25rem);
+    font-weight: 200;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  .t-h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .t-lead {
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+    line-height: 1.6;
+    color: var(--color-bone);
+    font-weight: 300;
+    letter-spacing: -0.011em;
+  }
+
+  .t-body {
+    font-size: 1rem;
+    line-height: 1.72;
+    color: var(--color-muted);
+    font-weight: 300;
+  }
+
+  /* The serif collision — one italic word inside a grotesk line. */
+  .t-em {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  .t-mono {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* --- Surfaces --------------------------------------------------------- */
+
+  .glass {
+    background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--color-elevated) 82%, transparent),
+      color-mix(in oklab, var(--color-abyss) 74%, transparent)
+    );
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--color-champagne) 8%, transparent);
+  }
+
+  /* Light catches the top edge of a card, the way it does on real glass. */
+  .edge-light {
+    position: relative;
+  }
+  .edge-light::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-champagne) 34%, transparent) 32%,
+      color-mix(in oklab, var(--color-prana) 28%, transparent) 62%,
+      transparent
+    );
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .text-synth {
+    background: linear-gradient(
+      104deg,
+      var(--color-prana) 0%,
+      #9fe3ff 34%,
+      var(--color-shakti) 78%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-champagne) 20%, transparent),
+      transparent 78%
+    );
+  }
+}
+
+/* ============================================================================
+   Utilities
+   ========================================================================= */
+
+@utility shell {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 5.5rem);
+}
+
+/* Ultra-wide displays: stop the line length from becoming unreadable. */
+@utility shell-wide {
+  width: 100%;
+  max-width: 1760px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 5.5rem);
+}
+
+@utility section-y {
+  padding-block: clamp(6rem, 14vh, 11rem);
+}
+
+/* Masked reveal container for line-by-line text animation. */
+@utility line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+@utility grain {
+  position: relative;
+}
+
+/* ============================================================================
+   Ambient
+   ========================================================================= */
+
+/* Film grain — a real one, generated as fractal noise, not a tiled png. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: var(--grain-src);
+  background-size: 220px 220px;
+  will-change: transform;
+}
+
+.noise-anim {
+  animation: grain-shift 6s steps(6) infinite;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -2%); }
+  80% { transform: translate(3%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Technology orbit. Rings and labels share this one keyframe — labels run it
+   in reverse so every word stays upright while its ring turns. */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   Reduced motion — a real fallback, not a blanket kill switch.
+   Content must still arrive; it simply arrives without travel.
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .noise-anim {
+    animation: none !important;
+  }
+
+  /* Anything staged for a motion reveal is forced to its resting state. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
